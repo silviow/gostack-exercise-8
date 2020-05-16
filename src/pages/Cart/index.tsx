@@ -7,7 +7,7 @@ import {
   Container,
   ProductContainer,
   ProductList,
-  Product,
+  ProductCard,
   ProductImage,
   ProductTitleContainer,
   ProductTitle,
@@ -25,9 +25,11 @@ import {
 
 import { useCart } from '../../hooks/cart';
 
+import BackgroundText from '../../components/BackgroundText';
+
 import formatValue from '../../utils/formatValue';
 
-interface Product {
+export interface Product {
   id: string;
   title: string;
   image_url: string;
@@ -39,27 +41,34 @@ const Cart: React.FC = () => {
   const { increment, decrement, products } = useCart();
 
   function handleIncrement(id: string): void {
-    // TODO
+    increment(id);
   }
 
   function handleDecrement(id: string): void {
-    // TODO
+    decrement(id);
   }
 
   const cartTotal = useMemo(() => {
-    // TODO RETURN THE SUM OF THE QUANTITY OF THE PRODUCTS IN THE CART
+    const total = formatValue(
+      products
+        .map(({ price, quantity }) => price * quantity)
+        .reduce((acum, curr) => acum + curr, 0),
+    );
 
-    return formatValue(0);
+    return total;
   }, [products]);
 
   const totalItensInCart = useMemo(() => {
-    // TODO RETURN THE SUM OF THE QUANTITY OF THE PRODUCTS IN THE CART
+    const total = products
+      .map(({ quantity }) => quantity)
+      .reduce((acum, curr) => acum + curr, 0);
 
-    return 0;
+    return total;
   }, [products]);
 
   return (
     <Container>
+      <BackgroundText />
       <ProductContainer>
         <ProductList
           data={products}
@@ -69,7 +78,7 @@ const Cart: React.FC = () => {
             height: 80,
           }}
           renderItem={({ item }: { item: Product }) => (
-            <Product>
+            <ProductCard>
               <ProductImage source={{ uri: item.image_url }} />
               <ProductTitleContainer>
                 <ProductTitle>{item.title}</ProductTitle>
@@ -101,7 +110,7 @@ const Cart: React.FC = () => {
                   <FeatherIcon name="minus" color="#E83F5B" size={16} />
                 </ActionButton>
               </ActionContainer>
-            </Product>
+            </ProductCard>
           )}
         />
       </ProductContainer>

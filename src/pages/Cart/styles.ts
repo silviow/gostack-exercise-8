@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import { FlatList } from 'react-native';
+import { Product } from '.';
 
 export const Container = styled.SafeAreaView`
   flex: 1;
@@ -13,25 +14,28 @@ export const ProductContainer = styled.View`
   flex-direction: row;
 `;
 
-export const ProductList = styled(FlatList)`
+export const ProductList = styled(FlatList as new () => FlatList<Product>)`
   flex: 1;
+  z-index: 2;
   padding: 0 10px;
 `;
 
-export const Product = styled.View`
+export const ProductCard = styled.View`
   background: #fff;
   padding: 15px 10px;
-  border-radius: 5px;
+  border-radius: 10px;
   margin: 5px;
   flex: 1;
   flex-direction: row;
 `;
 
 export const ProductImage = styled.Image`
-  height: 92px;
-  width: 92px;
+  top: 1px;
+  left: -15px;
+  height: 100px;
+  width: 130px;
+  align-self: center;
 `;
-
 export const ProductTitleContainer = styled.View`
   font-size: 16px;
   margin-left: 5px;
@@ -83,8 +87,9 @@ export const ActionContainer = styled.View`
 
 export const ActionButton = styled.TouchableOpacity`
   background: rgba(232, 63, 91, 0.1);
-  border-radius: 5px;
+  border-radius: 8px;
   padding: 12px;
+  margin-right: 4px;
   margin-bottom: 5px;
 `;
 
